@@ -1,10 +1,20 @@
 import type { ChatOptions, ModelShowInfo, OllamaModel, PullProgress } from "../types";
 
-const BASE_URL = "http://127.0.0.1:11434";
+export const DEFAULT_BASE_URL = "http://127.0.0.1:11434";
+let baseUrl = DEFAULT_BASE_URL;
+
+export function getBaseUrl(): string {
+  return baseUrl;
+}
+
+export function setBaseUrl(url: string | null | undefined): void {
+  const trimmed = url?.trim().replace(/\/+$/, "");
+  baseUrl = trimmed || DEFAULT_BASE_URL;
+}
 
 export async function checkOllamaAlive(): Promise<boolean> {
   try {
-    const res = await fetch(`${BASE_URL}/api/version`);
+    const res = await fetch(`${baseUrl}/api/version`);
     return res.ok;
   } catch {
     return false;
@@ -12,14 +22,14 @@ export async function checkOllamaAlive(): Promise<boolean> {
 }
 
 export async function listModels(): Promise<OllamaModel[]> {
-  const res = await fetch(`${BASE_URL}/api/tags`);
+  const res = await fetch(`${baseUrl}/api/tags`);
   if (!res.ok) throw new Error(`Failed to list models: ${res.status}`);
   const data = await res.json();
   return data.models ?? [];
 }
 
 export async function showModel(name: string): Promise<ModelShowInfo> {
-  const res = await fetch(`${BASE_URL}/api/show`, {
+  const res = await fetch(`${baseUrl}/api/show`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ model: name }),
@@ -52,7 +62,7 @@ export async function showModel(name: string): Promise<ModelShowInfo> {
 }
 
 export async function deleteModel(name: string): Promise<void> {
-  const res = await fetch(`${BASE_URL}/api/delete`, {
+  const res = await fetch(`${baseUrl}/api/delete`, {
     method: "DELETE",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ model: name }),
@@ -64,7 +74,7 @@ export async function* pullModel(
   name: string,
   signal?: AbortSignal,
 ): AsyncGenerator<PullProgress> {
-  const res = await fetch(`${BASE_URL}/api/pull`, {
+  const res = await fetch(`${baseUrl}/api/pull`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ model: name, stream: true }),
@@ -91,7 +101,7 @@ export async function* streamChat(
   signal?: AbortSignal,
   options?: ChatOptions,
 ): AsyncGenerator<ChatChunk> {
-  const res = await fetch(`${BASE_URL}/api/chat`, {
+  const res = await fetch(`${baseUrl}/api/chat`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ model, messages, stream: true, ...(options ? { options } : {}) }),

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { X, Sun, Moon, Monitor, RotateCcw } from "lucide-react";
+import { DEFAULT_BASE_URL } from "../api/ollama";
 import type { AppSettings, ModelShowInfo, ThemeMode } from "../types";
 
 interface SettingsModalProps {
@@ -107,6 +108,27 @@ export function SettingsModal({ open, onClose, settings, onUpdate, onReset, mode
                   {label}
                 </button>
               ))}
+            </div>
+          </section>
+
+          <section className="settings-section">
+            <div className="settings-section-title">Connection</div>
+            <div className="settings-note">
+              Ollama server address. Leave blank to use the default.
+            </div>
+            <div className="settings-row">
+              <div className="settings-row-head">
+                <span className="settings-row-label">Server URL</span>
+                <span className="settings-hint">default {DEFAULT_BASE_URL}</span>
+              </div>
+              <input
+                type="text"
+                className="settings-text-input"
+                placeholder={DEFAULT_BASE_URL}
+                value={settings.serverUrl ?? ""}
+                onChange={(e) => onUpdate({ serverUrl: e.target.value || null })}
+                spellCheck={false}
+              />
             </div>
           </section>
 
