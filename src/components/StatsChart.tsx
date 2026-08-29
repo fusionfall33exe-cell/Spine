@@ -41,7 +41,13 @@ export function StatsChart({ messages }: { messages: ChatMessage[] }) {
                 key === "tokensPerSec" ? "Speed" : "TTFT",
               ]}
             />
-            <Bar dataKey="tokensPerSec" fill="var(--accent)" radius={[3, 3, 0, 0]} isAnimationActive={false} />
+            <Bar
+              dataKey="tokensPerSec"
+              fill="var(--accent)"
+              radius={[3, 3, 0, 0]}
+              isAnimationActive={false}
+              maxBarSize={40}
+            />
           </BarChart>
         )}
       </div>

@@ -42,6 +42,14 @@ export interface ModelShowInfo {
   family?: string;
 }
 
+export interface GpuStats {
+  name: string;
+  util_percent: number;
+  mem_used_mb: number;
+  mem_total_mb: number;
+  temp_c: number | null;
+}
+
 export interface SystemStats {
   cpu_percent: number;
   per_core_percent: number[];
@@ -50,6 +58,7 @@ export interface SystemStats {
   ollama_cpu_percent: number;
   ollama_mem_mb: number;
   ollama_running: boolean;
+  gpus: GpuStats[];
 }
 
 export interface PullProgress {
@@ -66,6 +75,7 @@ export interface AppSettings {
   numCtx: number | null;
   temperature: number | null;
   numPredict: number | null;
+  serverUrl: string | null;
 }
 
 export interface ChatOptions {

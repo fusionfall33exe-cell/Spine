@@ -2,9 +2,11 @@ import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react"
 import { Send, Square, BarChart3, PanelRightClose, PanelRightOpen, Settings as SettingsIcon, Eraser } from "lucide-react";
 import {
   checkOllamaAlive,
+  DEFAULT_BASE_URL,
   deleteModel,
   listModels,
   pullModel,
+  setBaseUrl,
   showModel,
   streamChat,
 } from "./api/ollama";
@@ -64,6 +66,10 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    setBaseUrl(settings.serverUrl);
+  }, [settings.serverUrl]);
+
+  useEffect(() => {
     let mounted = true;
     (async () => {
       const alive = await checkOllamaAlive();
@@ -79,7 +85,7 @@ export default function App() {
       mounted = false;
       clearInterval(poll);
     };
-  }, [refreshModels]);
+  }, [refreshModels, settings.serverUrl]);
 
   useEffect(() => {
     if (!selectedModel) {
@@ -254,7 +260,7 @@ export default function App() {
             <div className="chat-empty">
               {ollamaAlive
                 ? "Send a message to start chatting."
-                : "Ollama isn't reachable at 127.0.0.1:11434 — is the service running?"}
+                : `Ollama isn't reachable at ${settings.serverUrl || DEFAULT_BASE_URL} — is the service running?`}
             </div>
           )}
           {messages.map((m) => (

@@ -8,6 +8,7 @@ const DEFAULT_SETTINGS: AppSettings = {
   numCtx: null,
   temperature: null,
   numPredict: null,
+  serverUrl: null,
 };
 
 function loadSettings(): AppSettings {
@@ -42,7 +43,7 @@ export function useSettings() {
   }, []);
 
   const reset = useCallback(() => {
-    setSettings((prev) => ({ ...DEFAULT_SETTINGS, theme: prev.theme }));
+    setSettings((prev) => ({ ...DEFAULT_SETTINGS, theme: prev.theme, serverUrl: prev.serverUrl }));
   }, []);
 
   return { settings, update, reset };

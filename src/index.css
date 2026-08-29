@@ -513,6 +513,20 @@ button, input, textarea, select {
   color: var(--text-dim);
 }
 
+.sysmon-gpu-block {
+  margin-bottom: 10px;
+}
+
+.sysmon-row-toggle {
+  cursor: pointer;
+}
+
+.sysmon-row-toggle .sysmon-value {
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+}
+
 .sysmon-value {
   font-variant-numeric: tabular-nums;
   font-weight: 650;
@@ -529,6 +543,14 @@ button, input, textarea, select {
   font-size: 10px;
   color: var(--text-dim);
   margin: 2px 0 6px;
+  flex-shrink: 0;
+}
+
+.sysmon-note {
+  font-size: 10.5px;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin: 2px 0 0;
   flex-shrink: 0;
 }
 
@@ -1165,6 +1187,27 @@ button, input, textarea, select {
   align-items: center;
   gap: 10px;
   margin-top: 10px;
+}
+
+.settings-text-input {
+  width: 100%;
+  margin-top: 10px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.settings-text-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.settings-text-input::placeholder {
+  color: var(--text-dim);
 }
 
 .settings-row-input input[type="range"] {

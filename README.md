@@ -8,8 +8,8 @@ Spine gives you a proper interface for models you're already running locally —
 
 - **Model switcher** — swap between installed models, and pull new ones straight from the UI
 - **Live performance stats** — tokens/sec, time-to-first-token, prompt/generation timing breakdown, per-session summaries
-- **System monitor** — CPU, RAM, per-core usage, and the Ollama process's own resource footprint, live
-- **Settings** — light/dark/system theme, and sliders for context length, temperature, and max output tokens
+- **System monitor** — GPU utilization/VRAM/temp (NVIDIA/AMD), CPU, RAM, per-core usage, and the Ollama process's own resource footprint, live
+- **Settings** — light/dark/system theme, a configurable Ollama server URL, and sliders for context length, temperature, and max output tokens
 - **Markdown + syntax highlighting** in responses
 
 ## Requirements
@@ -17,7 +17,7 @@ Spine gives you a proper interface for models you're already running locally —
 - [Ollama](https://ollama.com) installed and running (`ollama serve`)
 - A Debian-based Linux distribution (developed and tested on Debian Trixie)
 
-Spine talks to Ollama's local API at `http://127.0.0.1:11434` — that's the default Ollama already uses, so if `ollama serve` is running, there's nothing extra to configure.
+Spine talks to Ollama's local API at `http://127.0.0.1:11434` by default — that's what `ollama serve` uses out of the box, so there's nothing extra to configure. If Ollama is running elsewhere (a different port, or another machine on your network), set the server URL in Settings.
 
 ## Install
 
