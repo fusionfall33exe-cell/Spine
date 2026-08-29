@@ -4,6 +4,16 @@ A native desktop chat client for local LLMs, built on top of [Ollama](https://ol
 
 Spine gives you a proper interface for models you're already running locally — model switching, live performance stats, a system resource monitor, and a settings panel for tuning inference on the fly, all without leaving your machine.
 
+## Screenshots
+
+<p align="center">
+  <img src="docs/screenshots/chat-dark.png" width="49%" alt="Spine chat view, dark theme">
+  <img src="docs/screenshots/chat-light.png" width="49%" alt="Spine chat view, light theme">
+</p>
+<p align="center">
+  <img src="docs/screenshots/settings.png" width="49%" alt="Spine settings panel">
+</p>
+
 ## Features
 
 - **Model switcher** — swap between installed models, and pull new ones straight from the UI
