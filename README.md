@@ -42,8 +42,8 @@ sudo apt install libwebkit2gtk-4.1-dev libgtk-3-dev librsvg2-dev libayatana-appi
 Build:
 
 ```bash
-git clone https://github.com/fusionfall33exe-cell/spine.git
-cd spine
+git clone https://github.com/fusionfall33exe-cell/Spine.git
+cd Spine
 npm install
 npm run tauri build
 ```
