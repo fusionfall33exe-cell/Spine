@@ -38,7 +38,7 @@ Prerequisites:
 Then:
 
 ```bash
-git clone https://github.com/<you>/spine.git
+git clone https://github.com/fusionfall33exe-cell/spine.git
 cd spine
 npm install
 npm run tauri build
