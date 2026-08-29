@@ -31,19 +31,15 @@ Spine talks to Ollama's local API at `http://127.0.0.1:11434` by default — tha
 
 ## Install
 
-There's no pre-built release yet, so for now Spine has to be compiled from source. That just means: install a couple of build tools, clone the repo, and let `npm run tauri build` produce the actual installable package.
+No pre-built release yet — build from source.
 
-**1. Install build prerequisites:**
+Prerequisites: Node.js + npm, Rust (via [rustup](https://rustup.rs)), and Tauri's Linux build deps:
 
-- Node.js + npm
-- Rust (via [rustup](https://rustup.rs))
-- Tauri's Linux build dependencies:
+```bash
+sudo apt install libwebkit2gtk-4.1-dev libgtk-3-dev librsvg2-dev libayatana-appindicator3-dev patchelf
+```
 
-  ```bash
-  sudo apt install libwebkit2gtk-4.1-dev libgtk-3-dev librsvg2-dev libayatana-appindicator3-dev patchelf
-  ```
-
-**2. Clone and build:**
+Build:
 
 ```bash
 git clone https://github.com/fusionfall33exe-cell/spine.git
@@ -52,16 +48,10 @@ npm install
 npm run tauri build
 ```
 
-This produces two ready-to-use packages in `src-tauri/target/release/bundle/` — pick one:
+This lands two installable packages in `src-tauri/target/release/bundle/`:
 
-- **`.deb`** (recommended for Debian/Ubuntu):
-  ```bash
-  sudo apt install ./src-tauri/target/release/bundle/deb/Spine_*.deb
-  ```
-- **`.AppImage`** — no install needed, just run it directly:
-  ```bash
-  ./src-tauri/target/release/bundle/appimage/Spine_*.AppImage
-  ```
+- `.deb`: `sudo apt install ./src-tauri/target/release/bundle/deb/Spine_*.deb`
+- `.AppImage`: run `src-tauri/target/release/bundle/appimage/Spine_*.AppImage` directly, no install needed
 
 ## Development
 
