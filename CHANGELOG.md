@@ -2,6 +2,12 @@
 
 All notable changes to Spine will be documented in this file.
 
+## [1.1.0] - 2026-08-30
+
+### Added
+
+- CPU temperature in the system monitor, read via `sysinfo`'s hardware sensor support (Intel `coretemp` package temp, AMD `k10temp` Tctl/Tdie) — shown next to CPU usage, matching how GPU temperature already appears next to GPU usage
+
 ## [1.0.0] - 2026-08-29
 
 First release.

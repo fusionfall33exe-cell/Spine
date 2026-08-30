@@ -533,6 +533,11 @@ button, input, textarea, select {
   font-family: var(--font-mono);
 }
 
+.sysmon-value-sub {
+  font-weight: 500;
+  color: var(--text-dim);
+}
+
 .sysmon-chart {
   flex: 1 1 20px;
   min-height: 16px;

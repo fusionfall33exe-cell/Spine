@@ -1,7 +1,7 @@
 use serde::Serialize;
 use std::process::Command;
 use std::sync::Mutex;
-use sysinfo::System;
+use sysinfo::{Components, System};
 
 #[derive(Clone, Copy)]
 enum GpuBackend {
@@ -11,6 +11,7 @@ enum GpuBackend {
 
 struct AppState {
     sys: Mutex<System>,
+    components: Mutex<Components>,
     gpu_backend: Mutex<Option<Option<GpuBackend>>>,
 }
 
@@ -32,7 +33,29 @@ struct SystemStats {
     ollama_cpu_percent: f32,
     ollama_mem_mb: u64,
     ollama_running: bool,
+    cpu_temp_c: Option<f32>,
     gpus: Vec<GpuStats>,
+}
+
+fn find_cpu_temp(components: &Components) -> Option<f32> {
+    let by_label = |needle: &str| {
+        components
+            .iter()
+            .find(|c| c.label().to_lowercase().contains(needle))
+    };
+
+    // Intel: "coretemp Package id 0" is the whole-package reading.
+    // AMD: "k10temp Tctl" is the control temp used for fan curves; "Tdie" is the die
+    // temp reported as a fallback on chips/kernels without Tctl.
+    let chosen = by_label("package id 0")
+        .or_else(|| by_label("tctl"))
+        .or_else(|| by_label("tdie"))
+        .or_else(|| by_label("cpu"));
+
+    chosen.and_then(|c| {
+        let t = c.temperature();
+        if t.is_nan() { None } else { Some(t) }
+    })
 }
 
 fn detect_gpu_backend() -> Option<GpuBackend> {
@@ -171,6 +194,11 @@ fn get_system_stats(state: tauri::State<AppState>) -> SystemStats {
         None => vec![],
     };
 
+    let mut components = state.components.lock().unwrap();
+    components.refresh();
+    let cpu_temp_c = find_cpu_temp(&components);
+    drop(components);
+
     SystemStats {
         cpu_percent,
         per_core_percent,
@@ -179,6 +207,7 @@ fn get_system_stats(state: tauri::State<AppState>) -> SystemStats {
         ollama_cpu_percent,
         ollama_mem_mb,
         ollama_running,
+        cpu_temp_c,
         gpus,
     }
 }
@@ -189,6 +218,7 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .manage(AppState {
             sys: Mutex::new(System::new_all()),
+            components: Mutex::new(Components::new_with_refreshed_list()),
             gpu_backend: Mutex::new(None),
         })
         .invoke_handler(tauri::generate_handler![get_system_stats])

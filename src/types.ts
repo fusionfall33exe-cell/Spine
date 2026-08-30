@@ -58,6 +58,7 @@ export interface SystemStats {
   ollama_cpu_percent: number;
   ollama_mem_mb: number;
   ollama_running: boolean;
+  cpu_temp_c: number | null;
   gpus: GpuStats[];
 }
 

@@ -129,7 +129,12 @@ export function SystemMonitor({
         <div className="sysmon-label">
           <Cpu size={13} /> CPU
         </div>
-        <div className="sysmon-value">{current ? `${current.cpu_percent.toFixed(0)}%` : "…"}</div>
+        <div className="sysmon-value">
+          {current ? `${current.cpu_percent.toFixed(0)}%` : "…"}
+          {current?.cpu_temp_c != null ? (
+            <span className="sysmon-value-sub"> · {current.cpu_temp_c.toFixed(0)}°C</span>
+          ) : null}
+        </div>
       </div>
       <div className="sysmon-chart" ref={cpuRef}>
         {cpuSize.width > 0 && cpuSize.height > 0 && (
